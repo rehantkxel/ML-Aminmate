@@ -608,8 +608,9 @@ g.column rect {
   position: absolute;
   width: 95px;
   font-style: italic;
+  top: auto !important;
+  bottom: 100%;
 }
-
 .features.column .callout svg {
   position: absolute;
   left: -15px;
@@ -631,11 +632,25 @@ g.column rect {
 
 #main-part .features.column .callout .label {
   position: absolute;
-  top: 24px;
-  left: 3px;
+  top: auto !important;
+  left: -10px;
   font-size: 11px;
+  bottom: 0;
+  max-height: 70px;
+  overflow: auto;
+}
+#main-part .features.column .callout .label::-webkit-scrollbar {
+  width: 0;
 }
 
+#main-part .features.column .callout .label::-webkit-scrollbar-track {
+  -webkit-box-shadow: none !important;
+}
+
+#main-part .features.column .callout .label::-webkit-scrollbar-thumb {
+background-color: transparent;
+outline: unset !important;
+}
 /* Network (inside features column) */
 
 #network {
@@ -644,7 +659,9 @@ g.column rect {
   left: 0;
   z-index: 100;
 }
-
+#network svg {
+  overflow: visible;
+}
 #network svg .main-label {
   font-size: 13px;
   fill: #333;
