@@ -492,7 +492,15 @@ function drawNode(
           .text(suffix);
       }
       if (label.substring(lastIndex)) {
-        text.append("tspan").text(label.substring(lastIndex));
+        console.log("###############");
+        console.log(label.length);
+        console.log("###############");
+        if(label.length > 10){
+          text.append("tspan").text(label.substring(label.indexOf(' '))).attr("x",0.1).attr("y",0.2);
+          text.append("tspan").text(label.substring(label.indexOf(' '), lastIndex)).attr("x",0.1).attr("y",0.5);
+        }else{
+          text.append("tspan").text(label.substring(lastIndex));
+        }
       }
     } else {
       text.append("tspan").text(label);
