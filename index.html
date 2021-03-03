@@ -115,8 +115,8 @@ limitations under the License.
           <i class="material-icons">skip_next</i>
         </button> -->
         </div>
-        <div class="control">
-          <span class="label">Timer</span>
+        <div class="control" style="display: none">
+          <span class="label">Time</span>
           <span class="value" id="iter-number"></span>
         </div>
         <!-- <div class="control ui-learningRate">
@@ -174,8 +174,8 @@ limitations under the License.
             <option value="10">10</option>
           </select>
         </div>
-      </div> -->
-        <!-- <div class="control ui-problem">
+      </div>
+      <div class="control ui-problem">
         <label for="problem">Problem type</label>
         <div class="select">
           <select id="problem">
@@ -190,67 +190,62 @@ limitations under the License.
     <!-- Main Part -->
     <div id="main-part" class="l--page">
       <!--  Data Column-->
-      <div class="column data">
-        <!-- <h4>
+      <div class="column data" style="display: none">
+        <h4>
           <span>Data</span>
-        </h4> -->
-        <table style="width: 100%">
-          <tr>
-            <th>Stores</th>
-            <th>Projections</th>
-          </tr>
-          <tr>
-            <td>Smith</td>
-            <td>50</td>
-          </tr>
-          <tr>
-            <td>Jackson</td>
-            <td>94</td>
-          </tr>
-
-          <tr>
-            <td>Jackson</td>
-            <td>94</td>
-          </tr>
-          <tr>
-            <td>Jackson</td>
-            <td>94</td>
-          </tr>
-        </table>
-        <!-- 
-      <div class="ui-dataset">
-        <p>Which dataset do you want to use?</p>
-        <div class="dataset-list"> -->
-        <!-- <div class="dataset" title="Circle">
-            <canvas class="data-thumbnail" data-dataset="circle"></canvas>
-          </div> -->
-        <!-- <div class="dataset" title="Exclusive or">
-            <canvas class="data-thumbnail" data-dataset="xor"></canvas>
-          </div> -->
-        <!-- <div class="dataset" title="Gaussian">
-            <canvas class="data-thumbnail" data-dataset="gauss"></canvas>
-          </div> -->
-        <!-- <div class="dataset" title="Spiral">
-            <canvas class="data-thumbnail" data-dataset="spiral"></canvas>
+        </h4>
+        <div class="ui-dataset">
+          <p>Which dataset do you want to use?</p>
+          <div class="dataset-list">
+            <div class="dataset" title="Circle">
+              <canvas class="data-thumbnail" data-dataset="circle"></canvas>
+            </div>
+            <div class="dataset" title="Exclusive or">
+              <canvas class="data-thumbnail" data-dataset="xor"></canvas>
+            </div>
+            <div class="dataset" title="Gaussian">
+              <canvas class="data-thumbnail" data-dataset="gauss"></canvas>
+            </div>
+            <div class="dataset" title="Spiral">
+              <canvas class="data-thumbnail" data-dataset="spiral"></canvas>
+            </div>
+            <div class="dataset" title="Plane">
+              <canvas
+                class="data-thumbnail"
+                data-regDataset="reg-plane"
+              ></canvas>
+            </div>
+            <div class="dataset" title="Multi gaussian">
+              <canvas
+                class="data-thumbnail"
+                data-regDataset="reg-gauss"
+              ></canvas>
+            </div>
           </div>
-          <div class="dataset" title="Plane">
-            <canvas class="data-thumbnail" data-regDataset="reg-plane"></canvas>
-          </div>
-          <div class="dataset" title="Multi gaussian">
-            <canvas class="data-thumbnail" data-regDataset="reg-gauss"></canvas>
-          </div> -->
-        <!-- </div>
-      </div> -->
+        </div>
         <div>
-          <!-- <div class="ui-percTrainData">
-          <label for="percTrainData">Ratio of training to test data:&nbsp;&nbsp;<span class="value">XX</span>%</label>
-          <p class="slider">
-            <input class="mdl-slider mdl-js-slider" type="range" id="percTrainData" min="10" max="90" step="10">
-          </p>
-        </div> -->
+          <div class="ui-percTrainData">
+            <label for="percTrainData"
+              >Ratio of training to test data:&nbsp;&nbsp;<span class="value"
+                >XX</span
+              >%</label
+            >
+            <p class="slider">
+              <input
+                class="mdl-slider mdl-js-slider"
+                type="range"
+                id="percTrainData"
+                min="10"
+                max="90"
+                step="10"
+              />
+            </p>
+          </div>
           <div class="ui-noise">
-            <!-- <label for="noise">Noise:&nbsp;&nbsp;<span class="value">XX</span></label> -->
-            <p class="slider d-none">
+            <label for="noise"
+              >Noise:&nbsp;&nbsp;<span class="value">XX</span></label
+            >
+            <p class="slider">
               <input
                 class="mdl-slider mdl-js-slider"
                 type="range"
@@ -262,14 +257,27 @@ limitations under the License.
             </p>
           </div>
           <div class="ui-batchSize">
-            <!-- <label for="batchSize">Batch size:&nbsp;&nbsp;<span class="value">XX</span></label> -->
+            <label for="batchSize"
+              >Batch size:&nbsp;&nbsp;<span class="value">XX</span></label
+            >
             <p class="slider">
-              <!-- <input class="mdl-slider mdl-js-slider" type="range" id="batchSize" min="1" max="30" step="1"> -->
+              <input
+                class="mdl-slider mdl-js-slider"
+                type="range"
+                id="batchSize"
+                min="1"
+                max="30"
+                step="1"
+              />
             </p>
           </div>
-          <!-- <button class="basic-button" id="data-regen-button" title="Regenerate data">
+          <button
+            class="basic-button"
+            id="data-regen-button"
+            title="Regenerate data"
+          >
             Regenerate
-          </button> -->
+          </button>
         </div>
       </div>
 
@@ -435,27 +443,32 @@ limitations under the License.
               <!-- <path d="M12,30C5,20 2,15 12,0" marker-end="url(#arrow)"> -->
             </svg>
             <!-- <div class="label">
-            The outputs are mixed with varying <b>weights</b>, shown by the thickness of the lines.
-          </div> -->
+          The outputs are mixed with varying <b>weights</b>, shown by the thickness of the lines.
+        </div> -->
           </div>
         </div>
       </div>
-
       <!-- Hidden Layers Column -->
-      <div class="column hidden-layers">
+      <div class="column hidden-layers" style="display: none">
         <h4>
           <div class="ui-numHiddenLayers">
-            <!-- <button id="add-layers" class="mdl-button mdl-js-button mdl-button--icon">
-            <i class="material-icons">add</i>
-          </button>
-          <button id="remove-layers" class="mdl-button mdl-js-button mdl-button--icon">
-            <i class="material-icons">remove</i>
-          </button> -->
+            <button
+              id="add-layers"
+              class="mdl-button mdl-js-button mdl-button--icon"
+            >
+              <i class="material-icons">add</i>
+            </button>
+            <button
+              id="remove-layers"
+              class="mdl-button mdl-js-button mdl-button--icon"
+            >
+              <i class="material-icons">remove</i>
+            </button>
           </div>
-          <!-- <span id="num-layers"></span>
-        <span id="layers-label"></span> -->
+          <span id="num-layers"></span>
+          <span id="layers-label"></span>
         </h4>
-        <!-- <div class="bracket"></div> -->
+        <div class="bracket"></div>
       </div>
 
       <!-- Output Column -->
@@ -477,32 +490,70 @@ limitations under the License.
           <div style="display: flex; align-items: center">
             <!-- Gradient color scale -->
             <div class="label" style="width: 105px; margin-right: 10px">
-              <!-- Colors shows data, neuron and weight values. -->
+              Colors shows data, neuron and weight values.
             </div>
             <svg width="150" height="30" id="colormap">
-              <!-- <defs>
-              <linearGradient id="gradient" x1="0%" y1="100%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#f59322" stop-opacity="1"></stop>
-                <stop offset="50%" stop-color="#e8eaeb" stop-opacity="1"></stop>
-                <stop offset="100%" stop-color="#0877bd" stop-opacity="1"></stop>
-              </linearGradient>
-            </defs> -->
-              <!-- <g class="core" transform="translate(3, 0)">
-              <rect width="144" height="10" style="fill: url('#gradient');"></rect>
-            </g> -->
+              <defs>
+                <linearGradient
+                  id="gradient"
+                  x1="0%"
+                  y1="100%"
+                  x2="100%"
+                  y2="100%"
+                >
+                  <stop
+                    offset="0%"
+                    stop-color="#f59322"
+                    stop-opacity="1"
+                  ></stop>
+                  <stop
+                    offset="50%"
+                    stop-color="#e8eaeb"
+                    stop-opacity="1"
+                  ></stop>
+                  <stop
+                    offset="100%"
+                    stop-color="#0877bd"
+                    stop-opacity="1"
+                  ></stop>
+                </linearGradient>
+              </defs>
+              <g class="core" transform="translate(3, 0)">
+                <rect
+                  width="144"
+                  height="10"
+                  style="fill: url('#gradient')"
+                ></rect>
+              </g>
             </svg>
           </div>
           <br />
-          <!-- <div style="display:flex;">
-          <label class="ui-showTestData mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="show-test-data">
-            <input type="checkbox" id="show-test-data" class="mdl-checkbox__input" checked>
-            <span class="mdl-checkbox__label label">Show test data</span>
-          </label>
-          <label class="ui-discretize mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="discretize">
-            <input type="checkbox" id="discretize" class="mdl-checkbox__input" checked>
-            <span class="mdl-checkbox__label label">Discretize output</span>
-          </label>
-        </div> -->
+          <div style="display: none">
+            <label
+              class="ui-showTestData mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect"
+              for="show-test-data"
+            >
+              <input
+                type="checkbox"
+                id="show-test-data"
+                class="mdl-checkbox__input"
+                checked
+              />
+              <span class="mdl-checkbox__label label">Show test data</span>
+            </label>
+            <label
+              class="ui-discretize mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect"
+              for="discretize"
+            >
+              <input
+                type="checkbox"
+                id="discretize"
+                class="mdl-checkbox__input"
+                checked
+              />
+              <span class="mdl-checkbox__label label">Discretize output</span>
+            </label>
+          </div>
         </div>
       </div>
     </div>
@@ -555,12 +606,12 @@ limitations under the License.
         <a href="https://research.google.com/bigpicture/">Big Picture</a> and <a href="https://research.google.com/teams/brain/">Google Brain</a> teams for feedback and guidance.
       </p>
     </div>
-  </article> -->
+  </article>
 
-    <!-- Footer -->
-    <footer>
-      <div class="l--body">
-        <!-- <a href="https://www.tensorflow.org/" class="logo">
+  <!-- Footer -->
+    <!-- <footer>
+    <div class="l--body">
+      <a href="https://www.tensorflow.org/" class="logo">
         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 528 87" xml:space="preserve">
         	<path d="M37.4,15.5v70.3H25V15.5H1V3.4h60.4v12.1H37.4z"/>
         	<path d="M149,85.8v-35c0-12.5-4.7-16.9-12.7-16.9c-8.1,0-12.7,5.8-12.7,15.8v36.1h-12.1V24h12.1v5.9c3.1-4.5,9.2-7.2,15.5-7.2
@@ -588,9 +639,10 @@ limitations under the License.
       </a>
       <div class="links">
         <a href="https://github.com/tensorflow/playground">Source on GitHub</a>
-      </div> -->
       </div>
-    </footer>
+    </div>
+  </footer> -->
+    -->
     <script src="bundle.js"></script>
     <!-- Google analytics -->
     <script src="analytics.js"></script>

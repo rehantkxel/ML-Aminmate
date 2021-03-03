@@ -54,7 +54,6 @@ const BIAS_SIZE = 5;
 const NUM_SAMPLES_CLASSIFY = 500;
 const NUM_SAMPLES_REGRESS = 1200;
 const DENSITY = 100;
-let timer = -1;
 
 enum HoverType {
   BIAS,
@@ -104,10 +103,6 @@ class Player {
     if (this.isPlaying) {
       this.isPlaying = false;
       this.pause();
-      if (timer !== -1) {
-        clearTimeout(timer);
-        console.log("cleartimeout called");
-      }
     } else {
       this.isPlaying = true;
       if (iter === 0) {
@@ -121,29 +116,16 @@ class Player {
     this.callback = callback;
   }
 
-  timeout() {
-    let PlayerThis = this;
-    timer = setTimeout(function () {
-      console.log("Test");
-      d3.selectAll("td").text("2");
-      reset();
-      PlayerThis.play();
-    }, 10000);
-  }
   play() {
-    console.log("play clicked");
     this.pause();
     this.isPlaying = true;
     if (this.callback) {
       this.callback(this.isPlaying);
     }
     this.start(this.timerIndex);
-
-    this.timeout();
   }
 
   pause() {
-    console.log("timerIndex", this.timerIndex);
     this.timerIndex++;
     this.isPlaying = false;
     if (this.callback) {
@@ -324,8 +306,8 @@ function makeGUI() {
   d3.select("label[for='percTrainData'] .value").text(state.percTrainData);
 
   let noise = d3.select("#noise").on("input", function () {
-    state.noise = 10;
-    d3.select("label[for='noise'] .value").text(10);
+    state.noise = this.value;
+    d3.select("label[for='noise'] .value").text(this.value);
     generateData();
     parametersChanged = true;
     reset();
@@ -390,7 +372,7 @@ function makeGUI() {
   let problem = d3.select("#problem").on("change", function () {
     state.problem = problems[this.value];
     generateData();
-    //   drawDatasetThumbnails();
+    drawDatasetThumbnails();
     parametersChanged = true;
     reset();
   });
@@ -407,7 +389,7 @@ function makeGUI() {
   d3.select("#colormap g.core")
     .append("g")
     .attr("class", "x axis")
-    .attr("transform", "translate(0,20)")
+    .attr("transform", "translate(0,10)")
     .call(xAxis);
 
   // Listen for css-responsive changes and redraw the svg network.
@@ -481,15 +463,13 @@ function drawNode(
     width: RECT_SIZE,
     height: RECT_SIZE,
   });
-  //console.log("nodeId", nodeId, "state[nodeId]", state[nodeId]);
-
   let activeOrNotClass = state[nodeId] ? "active" : "inactive";
   if (isInput) {
     let label = INPUTS[nodeId].label != null ? INPUTS[nodeId].label : nodeId;
     // Draw the input label.
     let text = nodeGroup.append("text").attr({
       class: "main-label",
-      x: 0,
+      x: -10,
       y: RECT_SIZE / 2,
       "text-anchor": "end",
     });
@@ -498,7 +478,6 @@ function drawNode(
       let myArray;
       let lastIndex;
       while ((myArray = myRe.exec(label)) != null) {
-        debugger;
         lastIndex = myRe.lastIndex;
         let prefix = myArray[1];
         let sep = myArray[2];
@@ -628,6 +607,7 @@ function drawNetwork(network: nn.Node[][]): void {
   let calloutThumb4 = d3.select(".callout.thumbnail4").style("display", "none");
   let calloutThumb5 = d3.select(".callout.thumbnail5").style("display", "none");
   let calloutWeights = d3.select(".callout.weights").style("display", "none");
+
   let idWithCallout = null;
   let targetIdWithCallout = null;
 
@@ -646,7 +626,7 @@ function drawNetwork(network: nn.Node[][]): void {
     let numNodes = network[layerIdx].length;
     let cx = layerScale(layerIdx) + RECT_SIZE / 2;
     maxY = Math.max(maxY, nodeIndexScale(numNodes));
-    //addPlusMinusControl(layerScale(layerIdx), layerIdx);
+    //  addPlusMinusControl(layerScale(layerIdx), layerIdx);
     for (let i = 0; i < numNodes; i++) {
       let node = network[layerIdx][i];
       let cy = nodeIndexScale(i) + RECT_SIZE / 2;
@@ -656,7 +636,6 @@ function drawNetwork(network: nn.Node[][]): void {
       // Show callout to thumbnails.
       let numNodes = network[layerIdx].length;
       let nextNumNodes = network[layerIdx + 1].length;
-
       if (
         idWithCallout == null &&
         i === numNodes - 1 &&
@@ -792,8 +771,8 @@ function addPlusMinusControl(x: number, layerIdx: number) {
   let i = layerIdx - 1;
   let firstRow = div.append("div").attr("class", `ui-numNodes${layerIdx}`);
   firstRow
-    // .append("button")
-    //.attr("class", "mdl-button mdl-js-button mdl-button--icon")
+    .append("button")
+    .attr("class", "mdl-button mdl-js-button mdl-button--icon")
     .on("click", () => {
       let numNeurons = state.networkShape[i];
       if (numNeurons >= 8) {
@@ -802,14 +781,14 @@ function addPlusMinusControl(x: number, layerIdx: number) {
       state.networkShape[i]++;
       parametersChanged = true;
       reset();
-    });
-  //.append("i")
-  //.attr("class", "material-icons")
-  //.text("add");
+    })
+    .append("i")
+    .attr("class", "material-icons")
+    .text("add");
 
   firstRow
-    //.append("button")
-    //.attr("class", "mdl-button mdl-js-button mdl-button--icon")
+    .append("button")
+    .attr("class", "mdl-button mdl-js-button mdl-button--icon")
     .on("click", () => {
       let numNeurons = state.networkShape[i];
       if (numNeurons <= 1) {
@@ -818,14 +797,13 @@ function addPlusMinusControl(x: number, layerIdx: number) {
       state.networkShape[i]--;
       parametersChanged = true;
       reset();
-    });
-  //.append("i")
-  //.attr("class", "material-icons")
-  //.text("remove");
+    })
+    .append("i")
+    .attr("class", "material-icons")
+    .text("remove");
 
   let suffix = state.networkShape[i] > 1 ? "s" : "";
-
-  div.append("div").text("neurons,");
+  div.append("div").text(state.networkShape[i] + " neuron" + suffix);
 }
 
 function updateHoverCard(
@@ -1267,7 +1245,7 @@ function simulationStarted() {
   parametersChanged = false;
 }
 
-//drawDatasetThumbnails();
+drawDatasetThumbnails();
 initTutorial();
 makeGUI();
 generateData(true);

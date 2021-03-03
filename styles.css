@@ -544,7 +544,6 @@ g.column rect {
 
 #main-part .data.column p.slider {
   margin: 0 -25px 20px;
-  display: none;
 }
 
 #main-part .basic-button {
@@ -609,8 +608,9 @@ g.column rect {
   width: 95px;
   font-style: italic;
   top: auto !important;
-  bottom: 100%;
+  bottom: calc(100% + 10px);
 }
+
 .features.column .callout svg {
   position: absolute;
   left: -15px;
@@ -636,7 +636,7 @@ g.column rect {
   left: -10px;
   font-size: 11px;
   bottom: 0;
-  max-height: 70px;
+  max-height: 75px;
   overflow: auto;
 }
 #main-part .features.column .callout .label::-webkit-scrollbar {
@@ -648,9 +648,10 @@ g.column rect {
 }
 
 #main-part .features.column .callout .label::-webkit-scrollbar-thumb {
-background-color: transparent;
-outline: unset !important;
+  background-color: transparent;
+  outline: unset !important;
 }
+
 /* Network (inside features column) */
 
 #network {

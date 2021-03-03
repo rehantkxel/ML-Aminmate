@@ -133,32 +133,32 @@ export class State {
   ];
 
   [key: string]: any;
-  learningRate = 0.03;
-  regularizationRate = 0;
+  learningRate = 1;
+  regularizationRate = 1;
   showTestData = false;
-  noise = 10;
-  batchSize = 10;
+  noise = 50;
+  batchSize = 30;
   discretize = false;
   tutorial: string = null;
-  percTrainData = 50;
+  percTrainData = 70;
   activation = nn.Activations.TANH;
   regularization: nn.RegularizationFunction = null;
-  problem = Problem.CLASSIFICATION;
+  problem = Problem.REGRESSION;
   initZero = false;
   hideText = false;
   collectStats = false;
   numHiddenLayers = 1;
   hiddenLayerControls: any[] = [];
-  networkShape: number[] = [8, 2];
+  networkShape: number[] = [4, 2];
   x = true;
   y = true;
-  xTimesY = true;
-  xSquared = true;
+  xTimesY = false;
+  xSquared = false;
   ySquared = false;
   cosX = false;
-  sinX = true;
+  sinX = false;
   cosY = false;
-  sinY = true;
+  sinY = false;
   dataset: dataset.DataGenerator = dataset.classifyCircleData;
   regDataset: dataset.DataGenerator = dataset.regressPlane;
   seed: string;
@@ -168,18 +168,14 @@ export class State {
    */
   static deserializeState(): State {
     let map: { [key: string]: string } = {};
-    //  console.log("window.location.hash      ", window.location.hash);
-
     const inputData =
-      " #activation=tanh&batchSize=10&dataset=circle&regDataset=reg-plane&learningRate=0.03&regularizationRate=0&noise=10&networkShape=8,7,7,3,3&seed=0.58622&showTestData=false&discretize=false&percTrainData=50&x=true&y=true&xTimesY=true&xSquared=true&ySquared=true&cosX=false&sinX=true&cosY=false&sinY=true&collectStats=false&problem=classification&initZero=false&hideText=false";
+      " #activation=tanh&batchSize=30&dataset=circle&regDataset=reg-plane&learningRate=1&regularizationRate=1&noise=50&networkShape=8,7,7,3,3&seed=0.58622&showTestData=false&discretize=false&percTrainData=70&x=true&y=true&xTimesY=true&xSquared=true&ySquared=true&cosX=false&sinX=true&cosY=false&sinY=true&collectStats=false&problem=regression&initZero=false&hideText=false";
 
     for (let keyvalue of inputData.slice(1).split("&")) {
-      //console.log("keyvalue           ", keyvalue);
       let [name, value] = keyvalue.split("=");
       map[name] = value;
     }
     let state = new State();
-    //  console.log("map", map);
 
     function hasKey(name: string): boolean {
       return name in map && map[name] != null && map[name].trim() !== "";
@@ -191,8 +187,6 @@ export class State {
 
     // Deserialize regular properties.
     State.PROPS.forEach(({ name, type, keyMap }) => {
-      //   console.log("type", type, "name", name, "keyMap", keyMap);
-      //  console.log("map", map);
       switch (type) {
         case Type.OBJECT:
           if (keyMap == null) {
@@ -218,7 +212,6 @@ export class State {
           break;
         case Type.BOOLEAN:
           if (hasKey(name)) {
-            //  console.log("  state[name] = map[name] ", state[name], map[name]);
             state[name] = map[name] === "false" ? false : true;
           }
           break;
@@ -235,7 +228,6 @@ export class State {
         default:
           throw Error("Encountered an unknown type for a state variable");
       }
-      ///  console.log("state", state);
     });
 
     // Deserialize state properties that correspond to hiding UI controls.
@@ -247,7 +239,6 @@ export class State {
       state.seed = Math.random().toFixed(5);
     }
     Math.seedrandom(state.seed);
-    //console.log("state", state);
     return state;
   }
 
