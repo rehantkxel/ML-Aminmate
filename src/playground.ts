@@ -14,6 +14,7 @@ limitations under the License.
 ==============================================================================*/
 
 import * as nn from "./nn";
+import axios from "axios";
 import { HeatMap, reduceMatrix } from "./heatmap";
 import {
   State,
@@ -187,6 +188,183 @@ let lineChart = new AppendingLineChart(d3.select("#linechart"), [
   "black",
 ]);
 
+interface interfaceProjection {
+  StoreId: string;
+  StoreName: string;
+  BusinessDate: string;
+  Lunch: string;
+  Midday: string;
+  Dinner: string;
+  OldLunch: string;
+  UpdatedDinner: string;
+  PredictedProjection: string;
+  DinnerUpdated: string;
+}
+let counter = 0;
+let projection: interfaceProjection;
+let projectionsIds = [
+  "111",
+  "119",
+
+  "102",
+
+  "103",
+  "117",
+
+  "100",
+
+  "104",
+
+  "105",
+
+  "106",
+
+  "109",
+
+  "10",
+
+  "112",
+
+  "115",
+
+  "116",
+
+  "120",
+
+  "118",
+
+  "107",
+
+  "122",
+
+  "123",
+
+  "121",
+
+  "124",
+
+  "125",
+
+  "126",
+
+  "127",
+
+  "128",
+
+  "129",
+
+  "130",
+
+  "131",
+
+  "132",
+
+  "133",
+
+  "135",
+
+  "134",
+
+  "136",
+
+  "137",
+
+  "138",
+
+  "139",
+
+  "140",
+
+  "141",
+
+  "142",
+
+  "143",
+  "146",
+
+  "144",
+
+  "145",
+
+  "147",
+
+  "148",
+
+  "150",
+
+  "149",
+
+  "151",
+
+  "152",
+
+  "153",
+
+  "154",
+
+  "155",
+
+  "156",
+
+  "157",
+
+  "158",
+
+  "161",
+
+  "160",
+
+  "159",
+
+  "162",
+];
+
+let Api = "https://api.devcontrolcenter.zupas.com/api/locations/projections/";
+
+function startCounter() {
+  let idIndex = 0;
+  let interval = 30;
+  getProjection(projectionsIds[idIndex]);
+
+  setInterval(() => {
+    if (counter === interval) {
+      console.log("projection", projection);
+      d3.select("#store").text(projection.StoreName);
+      d3.select("#lunch").text(projection.Lunch);
+      d3.select("#midday").text(projection.Midday);
+      d3.select("#dinner").text(projection.Dinner);
+
+      interval = interval + 30;
+      ++idIndex;
+      getProjection(projectionsIds[idIndex]);
+    }
+    counter = counter + 1;
+    console.log(counter);
+  }, 1000);
+}
+
+function getProjection(id) {
+  console.log("id", id);
+  axios.get(Api + id).then(
+    (response) => {
+      console.log(response);
+      projection = response.data.data.data;
+    },
+    (error) => {
+      axios.get(Api + id).then(
+        (response) => {
+          console.log(response);
+          projection = response.data.data.data;
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+      console.log(error);
+    }
+  );
+}
+
 function makeGUI() {
   d3.select("#reset-button").on("click", () => {
     reset();
@@ -196,6 +374,8 @@ function makeGUI() {
 
   d3.select("#play-pause-button").on("click", function () {
     // Change the button's content.
+
+    console.log("play-pause-button called");
     userHasInteracted();
     player.playOrPause();
   });
@@ -1251,3 +1431,14 @@ makeGUI();
 generateData(true);
 reset(true);
 hideControls();
+
+setTimeout(function () {
+  var e = document.createEvent("UIEvents");
+  e.initEvent("click", true, true /* ... */);
+  d3.select("#play-pause-button").node().dispatchEvent(e);
+}, 0);
+
+startCounter();
+
+// getProjection("102");
+//displayProjections();
