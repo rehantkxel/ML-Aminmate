@@ -367,7 +367,7 @@ header h1 .optional {
   -webkit-justify-content: space-between;
   justify-content: space-between;
   position: relative;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 #main-part h4 {

@@ -321,6 +321,33 @@ let projectionsIds = [
 
 let Api = "https://api.devcontrolcenter.zupas.com/api/locations/projections/";
 
+function AppendProjections() {
+  let d = new Date();
+  let interval = 15;
+  let startTime = 8;
+  let currentHours = d.getHours();
+  let DiffBtwHours = currentHours - startTime;
+  let currentMinutes = d.getMinutes();
+  let TotalMinutesAhead = DiffBtwHours * 60 + currentMinutes;
+  let NoOfProjectionsDisplay = TotalMinutesAhead / interval;
+
+  console.log(
+    "currentHours",
+    currentHours,
+    "DiffBtwHours",
+    DiffBtwHours,
+    "currentMinutes",
+    currentMinutes,
+    "TotalMinuteAhead",
+    TotalMinutesAhead,
+    "NoofProjectionDisplay",
+    NoOfProjectionsDisplay
+  );
+  d3.select("#projections").append("li").text("hello world");
+
+  for (let i = 0; i < NoOfProjectionsDisplay; i++) {}
+}
+
 function startCounter() {
   let idIndex = 0;
   let interval = 30;
@@ -673,28 +700,34 @@ function drawNode(
       }
 
       if (label.substring(lastIndex)) {
-        console.log("###############");
-        console.log(label.length);
-        console.log("###############");
-        if (label.length > 10) {
-          text
-            .append("tspan")
-            .text(label.substring(label.indexOf(" ")))
-            .attr("x", 0.1)
-            .attr("y", 0.2);
-          text
-            .append("tspan")
-            .text(label.substring(label.indexOf(" "), lastIndex))
-            .attr("x", 0.1)
-            .attr("y", 0.5);
-        } else {
-          text.append("tspan").text(label.substring(lastIndex));
-        }
+        // console.log("###############");
+        // console.log(label.length);
+        // console.log("###############");
+        text
+          .append("tspan")
+          .text(label.substring(0, label.lastIndexOf(" ")))
+          .attr("x", 0.5)
+          .attr("y", 10);
+        text
+          .append("tspan")
+          .text(label.substring(label.lastIndexOf(" "), label.length))
+          .attr("x", 0.5)
+          .attr("y", 25);
       }
     } else {
       // console.log("EEEEEEEE");
       // console.log("label", label , lastIndex);
-      //  text.append("tspan").text(label);
+      text
+        .append("tspan")
+        .text(label.substring(0, label.lastIndexOf(" ")))
+        .attr("x", 0.5)
+        .attr("y", 10);
+      text
+        .append("tspan")
+        .text(label.substring(label.lastIndexOf(" "), label.length))
+        .attr("x", 0.5)
+        .attr("y", 25);
+      //text.append("tspan").text(label);
     }
     nodeGroup.classed(activeOrNotClass, true);
   }
@@ -1456,7 +1489,7 @@ setTimeout(function () {
   e.initEvent("click", true, true /* ... */);
   d3.select("#play-pause-button").node().dispatchEvent(e);
 }, 0);
-
+AppendProjections();
 // startCounter();
 
 // getProjection("102");
