@@ -14,10 +14,11 @@ limitations under the License.
 ==============================================================================*/
 
 /* General Type */
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 body {
-  font-family: "Helvetica", "Arial", sans-serif;
-  background-color: #f7f7f7;
+  font-family: 'Raleway', sans-serif;
+  background-color: #4d86a133;
 }
 
 h1 {
@@ -26,7 +27,7 @@ h1 {
 
 header h1 {
   line-height: 1.45em;
-  font-weight: 300;
+  font-weight: 400;
   color: rgba(255, 255, 255, 0.7);
 }
 
@@ -37,7 +38,7 @@ h1 b {
 
 h2 {
   margin: 5px 0;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 18px;
 }
 
@@ -62,21 +63,9 @@ body {
 }
 
 .l--page {
-  width: 944px;
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
-}
-
-@media (min-width: 1180px) {
-  .l--page {
-    width: 1100px;
-  }
-}
-
-@media (min-width: 1400px) {
-  .l--page {
-    width: 1220px;
-  }
 }
 
 /* Buttons */
@@ -294,13 +283,13 @@ header h1 .optional {
   font-size: 13px;
   display: block;
   margin-bottom: 6px;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 #top-controls .control .value {
   font-size: 24px;
   margin: 0;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 #top-controls .control .select {
@@ -377,16 +366,7 @@ header h1 .optional {
   display: flex;
   -webkit-justify-content: space-between;
   justify-content: space-between;
-  margin-top: 30px;
-  margin-bottom: 50px;
-  padding-top: 2px;
   position: relative;
-}
-
-@media (min-height: 700px) {
-  #main-part {
-    margin-top: 50px;
-  }
 }
 
 #main-part h4 {
@@ -408,7 +388,7 @@ header h1 .optional {
 #main-part p,
 #main-part .column .label,
 #main-part .column label {
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.38em;
   margin: 0;
   color: #777;
@@ -584,7 +564,7 @@ g.column rect {
 /* Features column */
 
 .features.column {
-  width: 10%;
+  width: calc(100% - 260px);
   position: relative;
 }
 
@@ -666,7 +646,7 @@ g.column rect {
 #network svg .main-label {
   font-size: 13px;
   fill: #333;
-  font-weight: 300;
+  font-weight: 400;
 }
 
 .axis line {
@@ -805,12 +785,17 @@ g.column rect {
 /* Output column */
 
 .output.column {
-  width: 275px;
+  width: 280px;
+  background-color: #4d86a154;
+  padding: 15px;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
 }
+
 
 .metrics {
   position: relative;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 13px;
   height: 60px;
 }
@@ -833,7 +818,7 @@ g.column rect {
 .output .output-stats .value {
   color: rgba(0, 0, 0, 0.6);
   /*font-size: 20px;*/
-  font-weight: 300;
+  font-weight: 400;
   display: inline;
 }
 
@@ -894,7 +879,7 @@ article p {
 footer {
   border-top: solid 1px #eee;
   color: #ccc;
-  font-weight: 300;
+  font-weight: 400;
   padding: 40px 0;
   height: 30px;
 }
@@ -1011,4 +996,76 @@ footer .links a:hover {
 /* Keep grey focus circle for non-start values */
 #main-part .mdl-slider.is-upgraded:focus:not(:active)::-webkit-slider-thumb {
   box-shadow: 0 0 0 10px rgba(0, 0, 0, 0.12);
+}
+.Ml-dashboard_wrap {
+  display: flex;
+  max-width: 90%;
+  margin: 0 auto;
+  padding: 0;
+  background: #fff;
+  margin-top: 60px;
+  border-radius: 30px;
+  min-height: calc(100vh - 120px);
+  box-shadow: 0 0 4px #0000001a, 1px 0px 2px #00000029;
+}
+.Ml-dashboard_wrap:before {
+  content: '';
+  background: url('https://dpws867bovzg3.cloudfront.net/images/animation/ml-bg.jpg') no-repeat;
+  background-size: cover;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100%;
+  z-index: -1;
+  opacity: 0.5;
+}
+.sidebar_wrap {
+  background: #4d86a1;
+  padding: 40px 20px 20px;
+  height: max-content;
+  min-height: 400px;
+  border-radius: 30px;
+  min-width: 120px;
+  transform: translate(-26% , 20%);
+  box-shadow: 0 0 13px #00000033;
+}
+.sidebar_wrap ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.sidebar_wrap ul li {
+  display: flex;
+  align-items: center;
+  font-size: 17px;
+  color: #faecec;
+  padding: 0;
+  text-transform: uppercase;
+}
+.sidebar_wrap ul li:nth-child(even){
+  text-align: right;
+  justify-content: flex-end;
+  font-size: 14px;
+  padding-bottom: 30px;
+}
+.logo_wrap {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.logo_wrap img {
+  width: 100px;
+  margin: 0 auto;
+  filter: invert(100%) sepia(92%) saturate(0%) hue-rotate(320deg) brightness(90%) contrast(107%)
+}
+.store_title {
+  margin-top: 30px;
+}
+.store_title h4 {
+  font-size: 19px !important;
+  font-weight: 500 !important;
+  color: #4d86a1;
 }
