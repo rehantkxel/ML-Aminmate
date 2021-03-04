@@ -354,7 +354,7 @@ function getProjection(id) {
       axios.get(Api + id).then(
         (response) => {
           console.log(response);
-          projection = response.data.data.data;
+          projection = response.data.data;
         },
         (error) => {
           console.log(error);
