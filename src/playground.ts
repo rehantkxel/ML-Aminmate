@@ -671,19 +671,30 @@ function drawNode(
           .style("font-size", "9px")
           .text(suffix);
       }
+
       if (label.substring(lastIndex)) {
         console.log("###############");
         console.log(label.length);
         console.log("###############");
-        if(label.length > 10){
-          text.append("tspan").text(label.substring(label.indexOf(' '))).attr("x",0.1).attr("y",0.2);
-          text.append("tspan").text(label.substring(label.indexOf(' '), lastIndex)).attr("x",0.1).attr("y",0.5);
-        }else{
+        if (label.length > 10) {
+          text
+            .append("tspan")
+            .text(label.substring(label.indexOf(" ")))
+            .attr("x", 0.1)
+            .attr("y", 0.2);
+          text
+            .append("tspan")
+            .text(label.substring(label.indexOf(" "), lastIndex))
+            .attr("x", 0.1)
+            .attr("y", 0.5);
+        } else {
           text.append("tspan").text(label.substring(lastIndex));
         }
       }
     } else {
-      text.append("tspan").text(label);
+      // console.log("EEEEEEEE");
+      // console.log("label", label , lastIndex);
+      //  text.append("tspan").text(label);
     }
     nodeGroup.classed(activeOrNotClass, true);
   }
@@ -1446,7 +1457,7 @@ setTimeout(function () {
   d3.select("#play-pause-button").node().dispatchEvent(e);
 }, 0);
 
-startCounter();
+// startCounter();
 
 // getProjection("102");
 //displayProjections();
