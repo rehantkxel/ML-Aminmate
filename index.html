@@ -66,33 +66,12 @@ limitations under the License.
     <script src="lib.js"></script>
   </head>
   <body>
-    <!-- GitHub link -->
-    <a
-      class="github-link"
-      href="https://github.com/tensorflow/playground"
-      title="Source on GitHub"
-      target="_blank"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        xmlns:xlink="http://www.w3.org/1999/xlink"
-        viewBox="0 0 60.5 60.5"
-        width="60"
-        height="60"
-      >
-        <polygon class="bg" points="60.5,60.5 0,0 60.5,0 " />
-        <path
-          class="icon"
-          d="M43.1,5.8c-6.6,0-12,5.4-12,12c0,5.3,3.4,9.8,8.2,11.4c0.6,0.1,0.8-0.3,0.8-0.6c0-0.3,0-1,0-2c-3.3,0.7-4-1.6-4-1.6c-0.5-1.4-1.3-1.8-1.3-1.8c-1.1-0.7,0.1-0.7,0.1-0.7c1.2,0.1,1.8,1.2,1.8,1.2c1.1,1.8,2.8,1.3,3.5,1c0.1-0.8,0.4-1.3,0.8-1.6c-2.7-0.3-5.5-1.3-5.5-5.9c0-1.3,0.5-2.4,1.2-3.2c-0.1-0.3-0.5-1.5,0.1-3.2c0,0,1-0.3,3.3,1.2c1-0.3,2-0.4,3-0.4c1,0,2,0.1,3,0.4c2.3-1.6,3.3-1.2,3.3-1.2c0.7,1.7,0.2,2.9,0.1,3.2c0.8,0.8,1.2,1.9,1.2,3.2c0,4.6-2.8,5.6-5.5,5.9c0.4,0.4,0.8,1.1,0.8,2.2c0,1.6,0,2.9,0,3.3c0,0.3,0.2,0.7,0.8,0.6c4.8-1.6,8.2-6.1,8.2-11.4C55.1,11.2,49.7,5.8,43.1,5.8z"
-        />
-      </svg>
-    </a>
     <!-- Header -->
     <header>
     </header>
 
     <!-- Top Controls -->
-    <div id="top-controls" style="display: none;">
+    <!-- <div id="top-controls" style="display: none;">
       <div class="container l--page">
         <div class="timeline-controls">
           <button
@@ -109,24 +88,28 @@ limitations under the License.
           <span class="value" id="iter-number"></span>
         </div>
         </div>
-    </div>
+    </div> -->
 <div class="Ml-dashboard_wrap">
+    <div>
       <div class="sidebar_wrap">
         <div class="logo_wrap">
           <img src="https://dpws867bovzg3.cloudfront.net/images/Header/logo.png" alt="logo">
+          <h3>Revenue Productions</h3>
         </div>
         <ul>
           <!-- <li><span>Lunch</span> <span>6000000.00</span></li>
           <li><span>Midday</span> <span>2000000.00</span></li>
           <li><span>Dinner</span> <span>4000000.00</span></li> -->
-          <li>Lunch</li>
-          <li>= 2000000.00</li>
-          <li>Midday</li>
-          <li>= 2000000.00</li>
-          <li>Dinner</li>
-          <li>= 4000000.00</li>
+          <li>Store Name</li>
+          <li>20,0000</li>
+          <li>Store Name</li>
+          <li>20,0000</li>
+          <li>Store Name</li>
+          <li>40,0000</li>
         </ul>
       </div>
+    </div>
+
       <!-- Main Part -->
       <div id="main-part" class="l--page">
         <!--  Data Column-->
@@ -222,9 +205,7 @@ limitations under the License.
         </div>
   
         <!-- Features Column -->
-        <div>
-
-       
+        <div class="w-100">
         <div class="store_title">
           <h4>Calculating Revenue for this store.</h4>
         </div>
@@ -423,108 +404,9 @@ limitations under the License.
             <div id="linechart"></div>
           </div>
           <div id="heatmap"></div>
-          <div style="float: left; margin-top: 20px">
-            <div style="display: flex; align-items: center">
-              <!-- Gradient color scale -->
-              <div class="label" style="width: 105px; margin-right: 10px">
-                Colors shows data, neuron and weight values.
-              </div>
-              <svg width="150" height="30" id="colormap">
-                <defs>
-                  <linearGradient
-                    id="gradient"
-                    x1="0%"
-                    y1="100%"
-                    x2="100%"
-                    y2="100%"
-                  >
-                    <stop
-                      offset="0%"
-                      stop-color="#f59322"
-                      stop-opacity="1"
-                    ></stop>
-                    <stop
-                      offset="50%"
-                      stop-color="#e8eaeb"
-                      stop-opacity="1"
-                    ></stop>
-                    <stop
-                      offset="100%"
-                      stop-color="#0877bd"
-                      stop-opacity="1"
-                    ></stop>
-                  </linearGradient>
-                </defs>
-                <g class="core" transform="translate(3, 0)">
-                  <rect
-                    width="144"
-                    height="10"
-                    style="fill: url('#gradient')"
-                  ></rect>
-                </g>
-              </svg>
-            </div>
-            <br />
-            <div style="display: none">
-              <label
-                class="ui-showTestData mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect"
-                for="show-test-data"
-              >
-                <input
-                  type="checkbox"
-                  id="show-test-data"
-                  class="mdl-checkbox__input"
-                  checked
-                />
-                <span class="mdl-checkbox__label label">Show test data</span>
-              </label>
-              <label
-                class="ui-discretize mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect"
-                for="discretize"
-              >
-                <input
-                  type="checkbox"
-                  id="discretize"
-                  class="mdl-checkbox__input"
-                  checked
-                />
-                <span class="mdl-checkbox__label label">Discretize output</span>
-              </label>
-            </div>
-          </div>
         </div>
       </div>
 </div>
-
-    <!-- More -->
-    <div class="more">
-
-     <table>
-  <tr>
-    <th id="store">Store</th>
-    <th>Projections</th>
-    
-  </tr>
-  
-    <td> Lunch </td>
-    <td id="lunch">2</td>
-   
-  </tr>
-  <tr>
-    <td >Midday</td>
-    <td id="midday"></td>
-   
-  </tr>
-  <tr>
-    <td >Dinner</td>
-    <td id="dinner"></td>
-   
-  </tr>
-  </table>
-      <!-- <button class="mdl-button mdl-js-button mdl-button--icon"><i class="material-icons">keyboard_arrow_down</i></button> -->
-      <!-- <button class="mdl-button mdl-js-button mdl-button--fab">
-      <i class="material-icons">keyboard_arrow_down</i>
-    </button> -->
     </div>
     <!-- Article -->
 
