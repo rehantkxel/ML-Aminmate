@@ -329,7 +329,13 @@ let projectionsIds = [
 ];
 
 let Api = "https://api.devcontrolcenter.zupas.com/api/locations/projections";
-
+function showLoading() {
+  d3.select("#projections")
+    .append("h4")
+    .attr("id", "loader")
+    .style("color", "#FFFFFF")
+    .text("Loading...");
+}
 function AppendProjections() {
   let d = new Date();
   let interval = 15;
@@ -339,7 +345,10 @@ function AppendProjections() {
   let currentMinutes = d.getMinutes();
   let TotalMinutesAhead = DiffBtwHours * 60 + currentMinutes;
   let NoOfProjectionsDisplay = Math.floor(TotalMinutesAhead / interval);
-
+  // const totalTimeForCalculationInMilliSec = 900000;
+  //const totalTimeBeforeStartingCalculationInMilliSec = 480000
+  const timeoutForReload = 540000;
+  const timeIntervalForCalculationInMilliSec = 15000;
   console.log(
     "currentHours",
     currentHours,
@@ -352,8 +361,9 @@ function AppendProjections() {
     "NoofProjectionDisplay",
     NoOfProjectionsDisplay
   );
-  // d3.select("#projections").append("li").text("hello world");
+
   console.log("projectionsArray", projectionsArray);
+  //appending projections that are completed till current time
   for (let i = 0; i <= NoOfProjectionsDisplay; i++) {
     let totalRevenue = thousands_separators(projectionsArray[i].totalRevenue);
     d3.select("#projections")
@@ -363,18 +373,16 @@ function AppendProjections() {
       .insert("li", ":first-child")
       .text(projectionsArray[i].StoreName);
   }
-
-  //
+  d3.select("#store").text(
+    projectionsArray[NoOfProjectionsDisplay + 1].StoreName
+  );
+  // index of projection for which we are doing calculations
   let currentProjectionIndex = NoOfProjectionsDisplay;
-  // setting up interval after which we will display projection for store
 
-  setInterval(() => {
+  // setting up interval after which we will display projection for store
+  let StoresIntervalId = setInterval(() => {
     currentProjectionIndex++;
-    if (
-      typeof projectionsArray[currentProjectionIndex].totalRevenue !==
-        "undefined" &&
-      projectionsArray[currentProjectionIndex].StoreName !== "undefined"
-    ) {
+    if (typeof projectionsArray[currentProjectionIndex] !== "undefined") {
       let totalRevenue = thousands_separators(
         projectionsArray[currentProjectionIndex].totalRevenue
       );
@@ -390,9 +398,20 @@ function AppendProjections() {
 
       //displaying the name of next store for which we are going to calculate projection
 
-      d3.select("#store").text();
+      d3.select("#store").text(
+        projectionsArray[currentProjectionIndex + 1].StoreName
+      );
+    } else {
+      console.log("ELSE CALCULATED");
+      d3.select("#calculating").text("REVENUE CALCULATED FOR ALL STORES.");
+      clearInterval(StoresIntervalId);
+      clearInterval(AnimationInterval);
+
+      setTimeout(() => {
+        location.reload();
+      }, timeoutForReload);
     }
-  }, 5000);
+  }, timeIntervalForCalculationInMilliSec);
 }
 function thousands_separators(num) {
   var num_parts = num.toString().split(".");
@@ -426,6 +445,7 @@ function getProjections() {
     (response) => {
       console.log(response.data.data);
       projectionsArray = response.data.data.data;
+      d3.select("#loader").remove();
       AppendProjections();
     },
     (error) => {
@@ -433,6 +453,7 @@ function getProjections() {
         (response) => {
           console.log(response);
           projectionsArray = response.data.data.data;
+          d3.select("#loader").remove();
           AppendProjections();
         },
         (error) => {
@@ -440,6 +461,7 @@ function getProjections() {
             (response) => {
               console.log(response);
               projectionsArray = response.data.data.data;
+              d3.select("#loader").remove();
               AppendProjections();
             },
             (error) => {
@@ -576,7 +598,7 @@ function makeGUI() {
 
   let noise = d3.select("#noise").on("input", function () {
     //
-    state.noise = getRandomInt(10);
+    state.noise = getRandomInt(5);
     d3.select("label[for='noise'] .value").text(this.value);
     generateData();
     parametersChanged = true;
@@ -1552,13 +1574,14 @@ setTimeout(function () {
   e.initEvent("click", true, true /* ... */);
   d3.select("#play-pause-button").node().dispatchEvent(e);
 }, 1);
-setInterval(() => {
+
+let AnimationInterval = setInterval(() => {
   var e = document.createEvent("UIEvents");
   e.initEvent("input", true, true /* ... */);
   d3.select("#noise").node().dispatchEvent(e);
 }, 1000);
 
 //startCounter();
-
+showLoading();
 getProjections();
 //displayProjections();
