@@ -345,10 +345,9 @@ function AppendProjections() {
   let currentMinutes = d.getMinutes();
   let TotalMinutesAhead = DiffBtwHours * 60 + currentMinutes;
   let NoOfProjectionsDisplay = Math.floor(TotalMinutesAhead / interval);
-  // const totalTimeForCalculationInMilliSec = 900000;
-  //const totalTimeBeforeStartingCalculationInMilliSec = 480000
-  const timeoutForReload = 540000;
-  const timeIntervalForCalculationInMilliSec = 15000;
+
+  const timeoutForReload = 32400000;
+  const timeIntervalForCalculationInMilliSec = 900000;
   console.log(
     "currentHours",
     currentHours,
