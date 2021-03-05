@@ -339,7 +339,7 @@ function showLoading() {
 function AppendProjections() {
   let d = new Date();
   let interval = 15;
-  let startTime = 5;
+  let startTime = 8;
   let currentHours = d.getHours();
   let DiffBtwHours = currentHours - startTime;
   let currentMinutes = d.getMinutes();
@@ -412,6 +412,16 @@ function AppendProjections() {
     d3.select("#store").text(
       projectionsArray[currentProjectionIndex + 1].StoreName
     );
+    console.log("timeOut called");
+    //resetting weights of links
+    var e = document.createEvent("UIEvents");
+
+    e.initEvent("input", true, true /* ... */);
+    d3.select("#noise").node().dispatchEvent(e);
+
+    e.initEvent("click", true, true /* ... */);
+    d3.select("#play-pause-button").node().dispatchEvent(e);
+
     let StoresIntervalId = setInterval(() => {
       currentProjectionIndex++;
       if (typeof projectionsArray[currentProjectionIndex] !== "undefined") {
@@ -433,6 +443,11 @@ function AppendProjections() {
         d3.select("#store").text(
           projectionsArray[currentProjectionIndex + 1].StoreName
         );
+        e.initEvent("input", true, true /* ... */);
+        d3.select("#noise").node().dispatchEvent(e);
+
+        e.initEvent("click", true, true /* ... */);
+        d3.select("#play-pause-button").node().dispatchEvent(e);
       } else {
         console.log("ELSE CALCULATED");
         d3.select("#calculating").text("REVENUE CALCULATED FOR ALL STORES.");
@@ -1617,4 +1632,10 @@ setTimeout(function () {
 //startCounter();
 showLoading();
 getProjections();
+
+setInterval(() => {
+  var e = document.createEvent("UIEvents");
+  e.initEvent("change", true, true /* ... */);
+  d3.select("#learningRate").node().dispatchEvent(e);
+});
 //displayProjections();
