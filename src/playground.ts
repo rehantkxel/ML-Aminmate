@@ -404,7 +404,7 @@ function AppendProjections() {
       console.log("ELSE CALCULATED");
       d3.select("#calculating").text("REVENUE CALCULATED FOR ALL STORES.");
       clearInterval(StoresIntervalId);
-      clearInterval(AnimationInterval);
+      //clearInterval(AnimationInterval);
 
       setTimeout(() => {
         location.reload();
@@ -1574,11 +1574,11 @@ setTimeout(function () {
   d3.select("#play-pause-button").node().dispatchEvent(e);
 }, 1);
 
-let AnimationInterval = setInterval(() => {
-  var e = document.createEvent("UIEvents");
-  e.initEvent("input", true, true /* ... */);
-  d3.select("#noise").node().dispatchEvent(e);
-}, 1000);
+// let AnimationInterval = setInterval(() => {
+//   var e = document.createEvent("UIEvents");
+//   e.initEvent("input", true, true /* ... */);
+//   d3.select("#noise").node().dispatchEvent(e);
+// }, 1000);
 
 //startCounter();
 showLoading();
