@@ -1024,6 +1024,7 @@ footer .links a:hover {
   min-height: calc(100vh - 120px);
   -webkit-box-shadow: 0 0 4px #0000001a, 1px 0px 2px #00000029;
           box-shadow: 0 0 4px #0000001a, 1px 0px 2px #00000029;
+          max-height: calc(100vh - 120px);
 }
 .Ml-dashboard_wrap:before {
   content: "";
@@ -1057,8 +1058,8 @@ footer .links a:hover {
 .sidebar_wrap ul {
   list-style: none;
   margin: 0;
-  max-height: 280px;
-  padding: 15px 15px 15px;
+  max-height: calc(100% - 149px);
+  padding: 15px 15px 0;
   overflow: auto;
 }
 .sidebar_wrap ul::-webkit-scrollbar {
