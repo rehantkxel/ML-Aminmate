@@ -381,7 +381,7 @@ header h1 .optional {
   -webkit-justify-content: space-between;
   justify-content: space-between;
   position: relative;
-  overflow: hidden;
+  /* overflow: hidden; */
   width: calc(100% - 158px);
 }
 
@@ -660,7 +660,7 @@ g.column rect {
   overflow: visible;
 }
 #network svg .main-label {
-  font-size: 13px;
+  font-size: 12px;
   fill: #333;
   font-weight: 500;
 }
@@ -1055,7 +1055,7 @@ footer .links a:hover {
 .sidebar_wrap ul {
   list-style: none;
   margin: 0;
-  max-height: 280px;
+  max-height: calc(100% - 185px);
   padding: 30px 15px 15px;
   overflow: auto;
 }

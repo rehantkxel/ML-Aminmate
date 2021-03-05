@@ -199,9 +199,16 @@ interface interfaceProjection {
   UpdatedDinner: string;
   PredictedProjection: string;
   DinnerUpdated: string;
+  totalRevenue: number;
+}
+
+interface interfaceProjectionsArray {
+  projections: interfaceProjection[];
 }
 let counter = 0;
 let projection: interfaceProjection;
+
+let projectionsArray: interfaceProjection;
 let projectionsIds = [
   "111",
   "119",
@@ -319,7 +326,7 @@ let projectionsIds = [
   "162",
 ];
 
-let Api = "https://api.devcontrolcenter.zupas.com/api/locations/projections/";
+let Api = "https://api.devcontrolcenter.zupas.com/api/locations/projections";
 
 function AppendProjections() {
   let d = new Date();
@@ -344,8 +351,13 @@ function AppendProjections() {
     NoOfProjectionsDisplay
   );
   d3.select("#projections").append("li").text("hello world");
-
-  for (let i = 0; i < NoOfProjectionsDisplay; i++) {}
+  console.log("projectionsArray", projectionsArray);
+  for (let i = 0; i < NoOfProjectionsDisplay; i++) {
+    d3.select("#projections").append("li").text(projectionsArray[i].StoreName);
+    d3.select("#projections")
+      .append("li")
+      .text(projectionsArray[i].totalRevenue);
+  }
 }
 
 function startCounter() {
@@ -372,18 +384,30 @@ function startCounter() {
 
 function getProjection(id) {
   console.log("id", id);
-  axios.get(Api + id).then(
+  axios.get(Api).then(
     (response) => {
-      console.log(response);
-      projection = response.data.data.data;
+      console.log(response.data.data);
+      projectionsArray = response.data.data.data;
+      AppendProjections();
     },
     (error) => {
-      axios.get(Api + id).then(
+      axios.get(Api).then(
         (response) => {
           console.log(response);
-          projection = response.data.data;
+          projectionsArray = response.data.data.data;
+          AppendProjections();
         },
         (error) => {
+          axios.get(Api).then(
+            (response) => {
+              console.log(response);
+              projectionsArray = response.data.data.data;
+              AppendProjections();
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
           console.log(error);
         }
       );
@@ -1488,9 +1512,9 @@ setTimeout(function () {
   var e = document.createEvent("UIEvents");
   e.initEvent("click", true, true /* ... */);
   d3.select("#play-pause-button").node().dispatchEvent(e);
-}, 0);
-AppendProjections();
+}, 1);
+
 // startCounter();
 
-// getProjection("102");
+getProjection("102");
 //displayProjections();
