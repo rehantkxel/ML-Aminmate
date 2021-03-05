@@ -339,7 +339,7 @@ function showLoading() {
 function AppendProjections() {
   let d = new Date();
   let interval = 15;
-  let startTime = 8;
+  let startTime = 5;
   let currentHours = d.getHours();
   let DiffBtwHours = currentHours - startTime;
   let currentMinutes = d.getMinutes();
