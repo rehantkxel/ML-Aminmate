@@ -187,7 +187,9 @@ let lineChart = new AppendingLineChart(d3.select("#linechart"), [
   "#777",
   "black",
 ]);
-
+function getRandomInt(max) {
+  return 20 + Math.floor(Math.random() * Math.floor(max));
+}
 interface interfaceProjection {
   StoreId: string;
   StoreName: string;
@@ -336,7 +338,7 @@ function AppendProjections() {
   let DiffBtwHours = currentHours - startTime;
   let currentMinutes = d.getMinutes();
   let TotalMinutesAhead = DiffBtwHours * 60 + currentMinutes;
-  let NoOfProjectionsDisplay = TotalMinutesAhead / interval;
+  let NoOfProjectionsDisplay = Math.floor(TotalMinutesAhead / interval);
 
   console.log(
     "currentHours",
@@ -350,40 +352,67 @@ function AppendProjections() {
     "NoofProjectionDisplay",
     NoOfProjectionsDisplay
   );
-  d3.select("#projections").append("li").text("hello world");
+  // d3.select("#projections").append("li").text("hello world");
   console.log("projectionsArray", projectionsArray);
-  for (let i = 0; i < NoOfProjectionsDisplay; i++) {
-    d3.select("#projections").append("li").text(projectionsArray[i].StoreName);
+  for (let i = 0; i <= NoOfProjectionsDisplay; i++) {
+    let totalRevenue = thousands_separators(projectionsArray[i].totalRevenue);
     d3.select("#projections")
-      .append("li")
-      .text(projectionsArray[i].totalRevenue);
+      .insert("li", ":first-child")
+      .text(`$${totalRevenue}`);
+    d3.select("#projections")
+      .insert("li", ":first-child")
+      .text(projectionsArray[i].StoreName);
   }
-}
 
-function startCounter() {
-  let idIndex = 0;
-  let interval = 30;
-  getProjection(projectionsIds[idIndex]);
+  let currentProjectionIndex = NoOfProjectionsDisplay;
 
   setInterval(() => {
-    if (counter === interval) {
-      console.log("projection", projection);
-      d3.select("#store").text(projection.StoreName);
-      d3.select("#lunch").text(projection.Lunch);
-      d3.select("#midday").text(projection.Midday);
-      d3.select("#dinner").text(projection.Dinner);
-
-      interval = interval + 30;
-      ++idIndex;
-      getProjection(projectionsIds[idIndex]);
+    currentProjectionIndex++;
+    if (
+      typeof projectionsArray[currentProjectionIndex].totalRevenue !==
+        "undefined" &&
+      projectionsArray[currentProjectionIndex].StoreName !== "undefined"
+    ) {
+      let totalRevenue = thousands_separators(
+        projectionsArray[currentProjectionIndex].totalRevenue
+      );
+      d3.select("#projections")
+        .insert("li", ":first-child")
+        .text(`$${totalRevenue}`);
+      d3.select("#projections")
+        .insert("li", ":first-child")
+        .text(projectionsArray[currentProjectionIndex].StoreName);
     }
-    counter = counter + 1;
-    console.log(counter);
   }, 1000);
 }
+function thousands_separators(num) {
+  var num_parts = num.toString().split(".");
+  num_parts[0] = num_parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return num_parts.join(".");
+}
+// function startCounter() {
+//   let idIndex = 0;
+//   let interval = 30;
+//   getProjections(projectionsIds[idIndex]);
 
-function getProjection(id) {
-  console.log("id", id);
+//   setInterval(() => {
+//     if (counter === interval) {
+//       console.log("projection", projection);
+//       d3.select("#store").text(projection.StoreName);
+//       d3.select("#lunch").text(projection.Lunch);
+//       d3.select("#midday").text(projection.Midday);
+//       d3.select("#dinner").text(projection.Dinner);
+
+//       interval = interval + 30;
+//       ++idIndex;
+//       getProjections(projectionsIds[idIndex]);
+//     }
+//     counter = counter + 1;
+//     console.log(counter);
+//   }, 1000);
+// }
+
+function getProjections() {
   axios.get(Api).then(
     (response) => {
       console.log(response.data.data);
@@ -537,7 +566,8 @@ function makeGUI() {
   d3.select("label[for='percTrainData'] .value").text(state.percTrainData);
 
   let noise = d3.select("#noise").on("input", function () {
-    state.noise = this.value;
+    //
+    state.noise = getRandomInt(10);
     d3.select("label[for='noise'] .value").text(this.value);
     generateData();
     parametersChanged = true;
@@ -730,12 +760,12 @@ function drawNode(
         text
           .append("tspan")
           .text(label.substring(0, label.lastIndexOf(" ")))
-          .attr("x", 0.5)
+          .attr("x", -5)
           .attr("y", 10);
         text
           .append("tspan")
           .text(label.substring(label.lastIndexOf(" "), label.length))
-          .attr("x", 0.5)
+          .attr("x", -5)
           .attr("y", 25);
       }
     } else {
@@ -744,12 +774,12 @@ function drawNode(
       text
         .append("tspan")
         .text(label.substring(0, label.lastIndexOf(" ")))
-        .attr("x", 0.5)
+        .attr("x", -5)
         .attr("y", 10);
       text
         .append("tspan")
         .text(label.substring(label.lastIndexOf(" "), label.length))
-        .attr("x", 0.5)
+        .attr("x", -5)
         .attr("y", 25);
       //text.append("tspan").text(label);
     }
@@ -1513,8 +1543,13 @@ setTimeout(function () {
   e.initEvent("click", true, true /* ... */);
   d3.select("#play-pause-button").node().dispatchEvent(e);
 }, 1);
+setInterval(() => {
+  var e = document.createEvent("UIEvents");
+  e.initEvent("input", true, true /* ... */);
+  d3.select("#noise").node().dispatchEvent(e);
+}, 1000);
 
-// startCounter();
+//startCounter();
 
-getProjection("102");
+getProjections();
 //displayProjections();
