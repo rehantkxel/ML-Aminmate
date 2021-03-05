@@ -348,6 +348,21 @@ function AppendProjections() {
 
   const timeoutForReload = 32400000;
   const timeIntervalForCalculationInMilliSec = 900000;
+
+  let timeoutFirst;
+
+  if (currentMinutes <= 15) {
+    timeoutFirst = 15 % currentMinutes;
+  } else if (currentMinutes <= 30) {
+    timeoutFirst = 30 % currentMinutes;
+  } else if (currentMinutes <= 45) {
+    timeoutFirst = 45 % currentMinutes;
+  } else {
+    timeoutFirst = 60 % currentMinutes;
+  }
+  timeoutFirst = timeoutFirst * 60000;
+  console.log("timeout value", timeoutFirst);
+
   console.log(
     "currentHours",
     currentHours,
@@ -379,38 +394,57 @@ function AppendProjections() {
   let currentProjectionIndex = NoOfProjectionsDisplay;
 
   // setting up interval after which we will display projection for store
-  let StoresIntervalId = setInterval(() => {
+
+  setTimeout(() => {
     currentProjectionIndex++;
-    if (typeof projectionsArray[currentProjectionIndex] !== "undefined") {
-      let totalRevenue = thousands_separators(
-        projectionsArray[currentProjectionIndex].totalRevenue
-      );
+    let totalRevenue = thousands_separators(
+      projectionsArray[currentProjectionIndex].totalRevenue
+    );
+    console.log("setTimeOt");
+    d3.select("#projections")
+      .insert("li", ":first-child")
+      .text(`$${totalRevenue}`);
 
-      //displaying the calculated projections
+    d3.select("#projections")
+      .insert("li", ":first-child")
+      .text(projectionsArray[currentProjectionIndex].StoreName);
 
-      d3.select("#projections")
-        .insert("li", ":first-child")
-        .text(`$${totalRevenue}`);
-      d3.select("#projections")
-        .insert("li", ":first-child")
-        .text(projectionsArray[currentProjectionIndex].StoreName);
+    d3.select("#store").text(
+      projectionsArray[currentProjectionIndex + 1].StoreName
+    );
+    let StoresIntervalId = setInterval(() => {
+      currentProjectionIndex++;
+      if (typeof projectionsArray[currentProjectionIndex] !== "undefined") {
+        let totalRevenue = thousands_separators(
+          projectionsArray[currentProjectionIndex].totalRevenue
+        );
 
-      //displaying the name of next store for which we are going to calculate projection
+        //displaying the calculated projections
 
-      d3.select("#store").text(
-        projectionsArray[currentProjectionIndex + 1].StoreName
-      );
-    } else {
-      console.log("ELSE CALCULATED");
-      d3.select("#calculating").text("REVENUE CALCULATED FOR ALL STORES.");
-      clearInterval(StoresIntervalId);
-      //clearInterval(AnimationInterval);
+        d3.select("#projections")
+          .insert("li", ":first-child")
+          .text(`$${totalRevenue}`);
+        d3.select("#projections")
+          .insert("li", ":first-child")
+          .text(projectionsArray[currentProjectionIndex].StoreName);
 
-      setTimeout(() => {
-        location.reload();
-      }, timeoutForReload);
-    }
-  }, timeIntervalForCalculationInMilliSec);
+        //displaying the name of next store for which we are going to calculate projection
+
+        d3.select("#store").text(
+          projectionsArray[currentProjectionIndex + 1].StoreName
+        );
+      } else {
+        console.log("ELSE CALCULATED");
+        d3.select("#calculating").text("REVENUE CALCULATED FOR ALL STORES.");
+        clearInterval(StoresIntervalId);
+        //clearInterval(AnimationInterval);
+
+        setTimeout(() => {
+          location.reload();
+        }, timeoutForReload);
+      }
+    }, timeIntervalForCalculationInMilliSec);
+  }, timeoutFirst);
 }
 function thousands_separators(num) {
   var num_parts = num.toString().split(".");
