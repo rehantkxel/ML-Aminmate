@@ -1060,7 +1060,6 @@ footer .links a:hover {
   max-height: calc(100% - 134px);
   padding: 15px 15px 15px;
   overflow: auto;
-  height: 400px;
 }
 .sidebar_wrap ul::-webkit-scrollbar {
   width: 6px;

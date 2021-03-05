@@ -364,7 +364,9 @@ function AppendProjections() {
       .text(projectionsArray[i].StoreName);
   }
 
+  //
   let currentProjectionIndex = NoOfProjectionsDisplay;
+  // setting up interval after which we will display projection for store
 
   setInterval(() => {
     currentProjectionIndex++;
@@ -376,14 +378,21 @@ function AppendProjections() {
       let totalRevenue = thousands_separators(
         projectionsArray[currentProjectionIndex].totalRevenue
       );
+
+      //displaying the calculated projections
+
       d3.select("#projections")
         .insert("li", ":first-child")
         .text(`$${totalRevenue}`);
       d3.select("#projections")
         .insert("li", ":first-child")
         .text(projectionsArray[currentProjectionIndex].StoreName);
+
+      //displaying the name of next store for which we are going to calculate projection
+
+      d3.select("#store").text();
     }
-  }, 1000);
+  }, 5000);
 }
 function thousands_separators(num) {
   var num_parts = num.toString().split(".");
