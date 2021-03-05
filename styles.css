@@ -382,7 +382,7 @@ header h1 .optional {
   align-items: center;
   font-weight: 400;
   font-size: 16px;
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   position: relative;
   padding-bottom: 8px;
   margin: 0;
