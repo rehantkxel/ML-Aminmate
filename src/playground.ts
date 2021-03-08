@@ -361,22 +361,7 @@ function AppendProjections() {
     timeoutFirst = 60 % currentMinutes;
   }
   timeoutFirst = timeoutFirst * 60000;
-  console.log("timeout value", timeoutFirst);
 
-  console.log(
-    "currentHours",
-    currentHours,
-    "DiffBtwHours",
-    DiffBtwHours,
-    "currentMinutes",
-    currentMinutes,
-    "TotalMinuteAhead",
-    TotalMinutesAhead,
-    "NoofProjectionDisplay",
-    NoOfProjectionsDisplay
-  );
-
-  console.log("projectionsArray", projectionsArray);
   //appending projections that are completed till current time
   for (let i = 0; i <= NoOfProjectionsDisplay; i++) {
     let totalRevenue = thousands_separators(projectionsArray[i].totalRevenue);
@@ -397,10 +382,11 @@ function AppendProjections() {
 
   setTimeout(() => {
     currentProjectionIndex++;
+
     let totalRevenue = thousands_separators(
       projectionsArray[currentProjectionIndex].totalRevenue
     );
-    console.log("setTimeOt");
+    // appending animation for first timeout which will be calculated as difference between current minutes above 15min integral and time it will take to complete 15 minute interval
     d3.select("#projections")
       .insert("li", ":first-child")
       .text(`$${totalRevenue}`);
@@ -412,13 +398,15 @@ function AppendProjections() {
     d3.select("#store").text(
       projectionsArray[currentProjectionIndex + 1].StoreName
     );
-    console.log("timeOut called");
-    //resetting weights of links
+
+    //initializing event object
     var e = document.createEvent("UIEvents");
 
+    // dispatching event to stop animation and add noise to change the view of netwrk layers
     e.initEvent("input", true, true /* ... */);
     d3.select("#noise").node().dispatchEvent(e);
 
+    // dispatching event to start animation
     e.initEvent("click", true, true /* ... */);
     d3.select("#play-pause-button").node().dispatchEvent(e);
 
@@ -438,25 +426,37 @@ function AppendProjections() {
           .insert("li", ":first-child")
           .text(projectionsArray[currentProjectionIndex].StoreName);
 
-        //displaying the name of next store for which we are going to calculate projection
-
-        d3.select("#store").text(
-          projectionsArray[currentProjectionIndex + 1].StoreName
-        );
+        // dispatching event to stop animation and add noise to change the view of netwrk layers
         e.initEvent("input", true, true /* ... */);
         d3.select("#noise").node().dispatchEvent(e);
 
+        // dispatching event to start animation
         e.initEvent("click", true, true /* ... */);
         d3.select("#play-pause-button").node().dispatchEvent(e);
-      } else {
-        console.log("ELSE CALCULATED");
-        d3.select("#calculating").text("REVENUE CALCULATED FOR ALL STORES.");
-        clearInterval(StoresIntervalId);
-        //clearInterval(AnimationInterval);
 
-        setTimeout(() => {
-          location.reload();
-        }, timeoutForReload);
+        // checking if it is last store then show that all the projections have been calculated
+        if (
+          typeof projectionsArray[currentProjectionIndex + 1] === "undefined"
+        ) {
+          d3.select("#calculating").text("REVENUE CALCULATED FOR ALL STORES.");
+
+          // clearing/stoping timeinterval function for displaying the projection after 15 minutes
+          clearInterval(StoresIntervalId);
+
+          // dispatching event to stop animation
+          e.initEvent("input", true, true /* ... */);
+          d3.select("#noise").node().dispatchEvent(e);
+
+          // setting timeout for next day to start animation autonomously
+          setTimeout(() => {
+            location.reload();
+          }, timeoutForReload);
+        } else {
+          //displaying the name of next store for which we are going to calculate projection
+          d3.select("#store").text(
+            projectionsArray[currentProjectionIndex + 1].StoreName
+          );
+        }
       }
     }, timeIntervalForCalculationInMilliSec);
   }, timeoutFirst);
@@ -491,7 +491,7 @@ function thousands_separators(num) {
 function getProjections() {
   axios.get(Api).then(
     (response) => {
-      console.log(response.data.data);
+      //  console.log(response.data.data);
       projectionsArray = response.data.data.data;
       d3.select("#loader").remove();
       AppendProjections();
@@ -499,7 +499,7 @@ function getProjections() {
     (error) => {
       axios.get(Api).then(
         (response) => {
-          console.log(response);
+          //   console.log(response);
           projectionsArray = response.data.data.data;
           d3.select("#loader").remove();
           AppendProjections();
@@ -507,7 +507,7 @@ function getProjections() {
         (error) => {
           axios.get(Api).then(
             (response) => {
-              console.log(response);
+              //  console.log(response);
               projectionsArray = response.data.data.data;
               d3.select("#loader").remove();
               AppendProjections();
