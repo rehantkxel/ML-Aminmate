@@ -133,7 +133,7 @@ export class State {
   ];
 
   [key: string]: any;
-  learningRate = 0.3;
+  learningRate = 0.6;
   regularizationRate = 1;
   showTestData = false;
   noise = 50;
@@ -168,7 +168,7 @@ export class State {
    */
   static deserializeState(): State {
     let map: { [key: string]: string } = {};
-    const inputData = `#activation=tanh&batchSize=30&dataset=circle&regDataset=reg-plane&learningRate=0.4&regularizationRate=1&noise=50&networkShape=8,7,7,3,3&seed=0.58622&showTestData=false&discretize=false&percTrainData=70&x=true&y=true&xTimesY=true&xSquared=true&ySquared=true&cosX=false&sinX=true&cosY=false&sinY=true&collectStats=false&problem=regression&initZero=false&hideText=false`;
+    const inputData = `#activation=tanh&batchSize=30&dataset=circle&regDataset=reg-plane&learningRate=0.6&regularizationRate=1&noise=50&networkShape=8,7,7,3,3&seed=0.58622&showTestData=false&discretize=false&percTrainData=70&x=true&y=true&xTimesY=true&xSquared=true&ySquared=true&cosX=false&sinX=true&cosY=false&sinY=true&collectStats=false&problem=regression&initZero=false&hideText=false`;
 
     for (let keyvalue of inputData.slice(1).split("&")) {
       let [name, value] = keyvalue.split("=");

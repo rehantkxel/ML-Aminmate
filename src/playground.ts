@@ -347,19 +347,10 @@ function AppendProjections() {
   let NoOfProjectionsDisplay = Math.floor(TotalMinutesAhead / interval);
 
   const timeoutForReload = 32400000;
-  const timeIntervalForCalculationInMilliSec = 900000;
+  const timeIntervalForCalculationInMilliSec = 300000;
 
-  let timeoutFirst;
-
-  if (currentMinutes <= 15) {
-    timeoutFirst = 15 % currentMinutes;
-  } else if (currentMinutes <= 30) {
-    timeoutFirst = 30 % currentMinutes;
-  } else if (currentMinutes <= 45) {
-    timeoutFirst = 45 % currentMinutes;
-  } else {
-    timeoutFirst = 60 % currentMinutes;
-  }
+  let timeoutFirst = 5 - (currentMinutes % 5);
+  //converting minutes to milliseconds
   timeoutFirst = timeoutFirst * 60000;
 
   //appending projections that are completed till current time
@@ -434,23 +425,17 @@ function AppendProjections() {
         e.initEvent("click", true, true /* ... */);
         d3.select("#play-pause-button").node().dispatchEvent(e);
 
-        // checking if it is last store then show that all the projections have been calculated
+        // checking if it is last store then start showing the projections from start again
         if (
           typeof projectionsArray[currentProjectionIndex + 1] === "undefined"
         ) {
-          d3.select("#calculating").text("REVENUE CALCULATED FOR ALL STORES.");
-
-          // clearing/stoping timeinterval function for displaying the projection after 15 minutes
-          clearInterval(StoresIntervalId);
-
-          // dispatching event to stop animation
-          e.initEvent("input", true, true /* ... */);
-          d3.select("#noise").node().dispatchEvent(e);
-
-          // setting timeout for next day to start animation autonomously
-          setTimeout(() => {
-            location.reload();
-          }, timeoutForReload);
+          currentProjectionIndex = -1;
+          //displaying the name of next store for which we are going to calculate projection
+          d3.select("#store").text(
+            projectionsArray[currentProjectionIndex + 1].StoreName
+          );
+          //empty the list of projections
+          d3.select("#projections").html("");
         } else {
           //displaying the name of next store for which we are going to calculate projection
           d3.select("#store").text(
@@ -466,27 +451,6 @@ function thousands_separators(num) {
   num_parts[0] = num_parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   return num_parts.join(".");
 }
-// function startCounter() {
-//   let idIndex = 0;
-//   let interval = 30;
-//   getProjections(projectionsIds[idIndex]);
-
-//   setInterval(() => {
-//     if (counter === interval) {
-//       console.log("projection", projection);
-//       d3.select("#store").text(projection.StoreName);
-//       d3.select("#lunch").text(projection.Lunch);
-//       d3.select("#midday").text(projection.Midday);
-//       d3.select("#dinner").text(projection.Dinner);
-
-//       interval = interval + 30;
-//       ++idIndex;
-//       getProjections(projectionsIds[idIndex]);
-//     }
-//     counter = counter + 1;
-//     console.log(counter);
-//   }, 1000);
-// }
 
 function getProjections() {
   axios.get(Api).then(
@@ -534,7 +498,6 @@ function makeGUI() {
   d3.select("#play-pause-button").on("click", function () {
     // Change the button's content.
 
-    console.log("play-pause-button called");
     userHasInteracted();
     player.playOrPause();
   });
